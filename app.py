@@ -30,14 +30,26 @@ api.register_blueprint(cryptos_blueprint)
 # log request and response
 @app.after_request
 def log_request_and_response(response):
+    request_bound   =  f"##########################-REQUEST-###########################"
+    response_bound  =  f"##########################-RESPONSE-##########################"
+    end_bound       =  f"##########################-END-###############################"
     # log request
     if request.method == "GET":
-        app.logger.info(f"Request: {request.method} {request.url} {request.args}")
+        app.logger.info(request_bound)
+        app.logger.info(f"method: {request.method}")
+        app.logger.info(f"url: {request.url}")
+        app.logger.info(f"args: {request.args.__dict__}")
     if request.method == "POST":
-        app.logger.info(f"Request: {request.method} {request.url}, {request.json}")
+        app.logger.info(request_bound)
+        app.logger.info(f"method: {request.method}")
+        app.logger.info(f"url: {request.url}")
+        app.logger.info(f"json: {request.json}")
 
     # log response
-    app.logger.info(f"Response: {response.status} {response.json}")
+    app.logger.info(response_bound)
+    app.logger.info(f"status: {response.status}")
+    app.logger.info(f"json: {response.json}")
+    app.logger.info(end_bound)
 
     return response
 

@@ -17,7 +17,7 @@ class CryptosPrice(MethodView):
     """
 
     @cryptos_blueprint.response(status_code=200, schema=GetCryptoLivePriceSchema)
-    def get(self, crypto_symbol: str):
+    def get(self, crypto_symbol: str) -> Optional[Dict]:
         symbol = crypto_symbol.upper()
         db_client = current_app.extensions['mongodb_db']
         if symbol not in ["BTC", "ETH"]:
@@ -27,5 +27,5 @@ class CryptosPrice(MethodView):
                 data = db_client.find_latest_price("btc_live_price")
             if symbol == "ETH":
                 data = db_client.find_latest_price("eth_live_price")
-        print("cryptos response: ", data)
+
         return {"data": data}
