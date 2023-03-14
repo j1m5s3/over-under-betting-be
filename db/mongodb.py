@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from flask import current_app
 
+from datetime import datetime, timedelta
+
 
 class MongoDB:
     def __init__(self, app=None):
@@ -24,5 +26,17 @@ class MongoDB:
 
     def find_latest_price(self, collection):
         return self.db[collection].find_one(sort=[("timestamp", -1)])
+
+    def find_hourly_series(self, collection, num_hours):
+        now = datetime.now()
+        dt_before_now = now - timedelta(hours=num_hours)
+
+        end_timestamp = now.timestamp()
+        start_timestamp = dt_before_now.timestamp()
+
+        query = {"timestamp": {"$gte": start_timestamp,
+                               "$lt": end_timestamp}}
+
+        return self.db[collection].find(query)
 
 

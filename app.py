@@ -11,7 +11,7 @@ config = dotenv_values(dotenv_path=find_dotenv())
 app = Flask(__name__)
 
 # TODO: Move configurations to Config class
-app.config["API_TITLE"] = "My API"
+app.config["API_TITLE"] = "Over Under Betting API"
 app.config["API_VERSION"] = "v1"
 app.config["OPENAPI_VERSION"] = "3.0.2"
 app.config["OPENAPI_URL_PREFIX"] = "/"
@@ -30,9 +30,9 @@ api.register_blueprint(cryptos_blueprint)
 # log request and response
 @app.after_request
 def log_request_and_response(response):
-    request_bound   =  f"##########################-REQUEST-###########################"
-    response_bound  =  f"##########################-RESPONSE-##########################"
-    end_bound       =  f"##########################-END-###############################"
+    request_bound = f"##########################-REQUEST-###########################"
+    response_bound = f"##########################-RESPONSE-##########################"
+    end_bound = f"##########################-END-###############################"
     # log request
     if request.method == "GET":
         app.logger.info(request_bound)
@@ -52,6 +52,11 @@ def log_request_and_response(response):
     app.logger.info(end_bound)
 
     return response
+
+
+@app.route("/")
+def health_check():
+    return {"status": "OK", "message": "Over Under Betting API is up and running"}
 
 
 if __name__ == '__main__':
