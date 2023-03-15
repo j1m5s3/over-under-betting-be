@@ -35,7 +35,8 @@ class MongoDB:
         start_timestamp = dt_before_now.timestamp()
 
         query = {"timestamp": {"$gte": start_timestamp,
-                               "$lt": end_timestamp}}
+                               "$lt": end_timestamp,
+                               "$mod": [60, 0]}}
 
         return self.db[collection].find(query)
 
