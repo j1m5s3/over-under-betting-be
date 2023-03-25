@@ -8,10 +8,12 @@ class DBPriceSchema(Schema):
     class Meta:
         unknown = 'exclude'
 
-
 class GetCryptoPricesSchema(Schema):
     data = fields.Nested(DBPriceSchema, required=True, many=True)
 
 
 class GetCryptoLivePriceSchema(Schema):
     data = fields.Nested(DBPriceSchema, required=True)
+
+
+

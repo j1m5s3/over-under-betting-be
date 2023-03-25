@@ -40,4 +40,9 @@ class MongoDB:
 
         return self.db[collection].find(query)
 
+    def find(self, collection, query):
+        return self.db[collection].find(query)
+
+
+
 

@@ -1,10 +1,13 @@
 from flask import Flask, request
 from flask_smorest import Api
+from flask_cors import CORS
 
 from dotenv import find_dotenv, dotenv_values
 
 from db.mongodb import MongoDB
+
 from routes.data.cryptos import cryptos_blueprint
+from routes.events.events import events_blueprint
 
 config = dotenv_values(dotenv_path=find_dotenv())
 
@@ -23,8 +26,10 @@ app.config["MONGO_DB_NAME"] = config["MONGO_DB_NAME"]
 
 api = Api(app)
 db = MongoDB(app)
+CORS(app, origins=config["CORS_ORIGINS"])
 
 api.register_blueprint(cryptos_blueprint)
+api.register_blueprint(events_blueprint)
 
 
 # log request and response
