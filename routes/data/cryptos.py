@@ -1,7 +1,6 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from flask import current_app
-from datetime import datetime, timedelta
 from typing import Dict, Optional, List
 from .schemas.cryptos_schemas import GetCryptoPricesSchema, GetCryptoLivePriceSchema
 
